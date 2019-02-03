@@ -1,9 +1,15 @@
 //Computational Fabrication Assignment #1
-// By David Levin 2014
 #include <iostream>
 #include <vector>
 #include "CompFab.h"
 #include "Mesh.h"
+#include <cfloat> // added DBL_MAX/DBL_MIN
+
+//Triangle list (global)
+typedef std::vector<CompFab::Triangle> TriangleList;
+
+TriangleList g_triangleList;
+CompFab::VoxelGrid *g_voxelGrid;
 
 //Ray-Triangle Intersection
 //Returns 1 if triangle and ray intersect, 0 otherwise
@@ -12,27 +18,53 @@ int rayTriangleIntersection(CompFab::Ray &ray, CompFab::Triangle &triangle)
     /********* ASSIGNMENT *********/
     /* Ray-Triangle intersection test: Return 1 if ray intersects triangle, 
      * 0 otherwise */
+
+    // Step 1: compute normal vector of the current triangle.
+    CompFab::Vec3 v1 = triangle.m_v1;
+    CompFab::Vec3 v2 = triangle.m_v2;
+    CompFab::Vec3 v3 = triangle.m_v3;
+    CompFab::Vec3 n = (v1 - v2) % (v1 - v3); // normal vector
     
+    // Step 2: Check if the ray and the triangle are parallel by using dot product.
+    double denominator = ray.m_direction * n;
+    if (denominator == 0.0) // perpendicular to the normal vector. infinite / 0 solutions
+        return 0;
+    // Step 3: check if t is valid
+    double numerator = (triangle.m_v2 - ray.m_origin) * n;
+    double t = numerator / denominator;
+    if (t >= 0.0 && t < DBL_MAX) {
+        // Step 4: check if the intersection point X is on the inside of all three edges
+        CompFab::Vec3 X =
+                ray.m_origin +
+                CompFab::Vec3(t * ray.m_direction.m_x, t * ray.m_direction.m_y, t * ray.m_direction.m_z);
+        CompFab::Vec3 e1 = v2 - v1; // three edges of the triangle
+        CompFab::Vec3 e2 = v3 - v2;
+        CompFab::Vec3 e3 = v1 - v3;
+        CompFab::Vec3 x1 = X - v1;
+        CompFab::Vec3 x2 = X - v2;
+        CompFab::Vec3 x3 = X - v3;
+        if ((e1 % x1 * n > 0) && (e2 % x2 * n > 0) && (e3 % x3 * n > 0))
+            return 1;
+    }
     return 0;
 
 }
 
-//Triangle list (global)
-typedef std::vector<CompFab::Triangle> TriangleList;
-
-TriangleList g_triangleList;
-CompFab::VoxelGrid *g_voxelGrid;
-
 //Number of intersections with surface made by a ray originating at voxel and cast in direction.
+
+// Added a parameter triangle.
 int numSurfaceIntersections(CompFab::Vec3 &voxelPos, CompFab::Vec3 &dir)
 {
-    
     unsigned int numHits = 0;
     
-    /********* ASSIGNMENT *********/
-    /* Check and return the number of times a ray cast in direction dir, 
-     * from voxel center voxelPos intersects the surface */
-    
+/* Check and return the number of times a ray cast in direction dir,
+* from voxel center voxelPos intersects the surface */
+
+    CompFab::Ray ray(voxelPos, dir);//Vec3 &origin, Vec3 &direction
+    for (auto& triangle : g_triangleList)
+        if (rayTriangleIntersection(ray, triangle)) // 1: intersect!
+            numHits++;
+
     return numHits;
 }
 
@@ -54,7 +86,7 @@ bool loadMesh(char *filename, unsigned int dim)
     }
 
     //Create Voxel Grid
-    CompFab::Vec3 bbMax, bbMin;
+    CompFab::Vec3 bbMax, bbMin; // store min/max points of the entire Voxel Grid
     BBox(*tempMesh, bbMin, bbMax);
     
     //Build Voxel Grid
@@ -73,7 +105,8 @@ bool loadMesh(char *filename, unsigned int dim)
     }
     
     CompFab::Vec3 hspacing(0.5*spacing, 0.5*spacing, 0.5*spacing);
-    
+
+    // define the voxelGrid with the min point and max spacing
     g_voxelGrid = new CompFab::VoxelGrid(bbMin-hspacing, dim, dim, dim, spacing);
 
     delete tempMesh;
@@ -98,7 +131,7 @@ void saveVoxelsToObj(const char * outfile)
         for (int jj = 0; jj < ny; jj++) {
             for (int kk = 0; kk < nz; kk++) {
                 if(!g_voxelGrid->isInside(ii,jj,kk)){
-                    continue;
+                        continue;
                 }
                 CompFab::Vec3 coord(0.5f + ((double)ii)*spacing, 0.5f + ((double)jj)*spacing, 0.5f+((double)kk)*spacing);
                 CompFab::Vec3 box0 = coord - hspacing;
@@ -112,36 +145,40 @@ void saveVoxelsToObj(const char * outfile)
     mout.save_obj(outfile);
 }
 
-
-int main(int argc, char **argv)
+int main()
 {
 
-    unsigned int dim = 32; //dimension of voxel grid (e.g. 32x32x32)
+    //dimension of voxel grid (e.g. 32x32x32)
+    unsigned int dim = 32;
+    std::cout << "Please type the directory of the object.\n" << "For example: ./sphere.obj\n";
+    char* source;
+    std::cin >> source;
+    loadMesh(source, dim);
 
-    //Load OBJ
-    if(argc < 3)
-    {
-        std::cout<<"Usage: Voxelizer InputMeshFilename OutputMeshFilename \n";
-        exit(0);
-    }
-    
-    std::cout<<"Load Mesh : "<<argv[1]<<"\n";
-    loadMesh(argv[1], dim);
-    
-
-    
-    //Cast ray, check if voxel is inside or outside
-    //even number of surface intersections = outside (OUT then IN then OUT)
-    // odd number = inside (IN then OUT)
     CompFab::Vec3 voxelPos;
     CompFab::Vec3 direction(1.0,0.0,0.0);
-    
-    /********* ASSIGNMENT *********/
-    /* Iterate over all voxels in g_voxelGrid and test whether they are inside our outside of the
-     * surface defined by the triangles in g_triangleList */
-    
-    //Write out voxel data as obj
-    saveVoxelsToObj(argv[2]);
-    
+    /*
+     * Iterate over all voxels in g_voxelGrid and test whether they are inside our outside of the
+     * surface defined by the triangles in g_triangleList
+     * Cast ray, check if voxel is inside or outside
+     * even number-> outside, while odd number -> inside
+     */
+
+    double spacing = g_voxelGrid -> m_spacing;
+    for (int i = 0; i < g_voxelGrid -> m_dimX; i++)
+        for (int j = 0; j < g_voxelGrid -> m_dimY; j++)
+            for (int k = 0; k < g_voxelGrid -> m_dimZ; k++)
+            {
+                voxelPos.m_x = g_voxelGrid -> m_lowerLeft.m_x + ((double)i) * spacing;// + 0.5f;
+                voxelPos.m_y = g_voxelGrid -> m_lowerLeft.m_y + ((double)j) * spacing;// + 0.5f;
+                voxelPos.m_z = g_voxelGrid -> m_lowerLeft.m_z + ((double)k) * spacing;// + 0.5f;
+                int numOfIntersect = numSurfaceIntersections(voxelPos, direction);
+                if (numOfIntersect % 2 != 0) // odd, inside
+                    g_voxelGrid -> m_insideArray[k*(g_voxelGrid -> m_dimX * g_voxelGrid -> m_dimY)+j* g_voxelGrid -> m_dimY + i] = true;
+            }
+
+    //Write  voxel data as obj
+    char* output = "./output.obj";
+    saveVoxelsToObj(output);
     delete g_voxelGrid;
 }

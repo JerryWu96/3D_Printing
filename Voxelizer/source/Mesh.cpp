@@ -12,7 +12,6 @@
 #include <map>
 #include <sstream>
 #include <string.h>
-//#include "util.h"
 
 typedef double real_t;
 
@@ -31,7 +30,7 @@ bool ptInBox(const CompFab::Vec3 & mn,
 void makeCube(Mesh & m, const CompFab::Vec3 & mn,
     const CompFab::Vec3 mx)
 {
-  CompFab::Vec3 ss = mx -mn;
+  CompFab::Vec3 ss = mx - mn;
   m=UNIT_CUBE;
   for(unsigned int ii = 0;ii<m.v.size();ii++){
     m.v[ii][0] = mn[0] + ss[0]*m.v[ii][0];
@@ -448,12 +447,12 @@ void BBox(const std::vector<CompFab::Vec3 >& v,
   mn = v[0];
   mx = v[0];
   for(unsigned int ii = 1 ;ii<v.size();ii++){
-    for(int dim = 0 ; dim<3;dim++){
+    for(int dim = 0 ;dim<3; dim++){
       if(v[ii][dim]<mn[dim]){
-        mn[dim] = v[ii][dim];
+        mn[dim] = v[ii][dim]; // find the min triangle point among all triangles
       }
       if(v[ii][dim]>mx[dim]){
-        mx[dim] = v[ii][dim];
+        mx[dim] = v[ii][dim]; // find the max triangle point among all triangles
       }
     }
   }
