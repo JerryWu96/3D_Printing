@@ -1,4 +1,4 @@
-# Computational Fabrication (3D Printing), Course Project	
+# Computational Fabrication (3D Printing) - Course Project	
 
 I am passionate about 3D Printing, so i decided to give it a try!
 
