@@ -26,6 +26,9 @@ If you take it seriously, please use CMake with command lines to get a better un
 
 ## Build with CMake
 
+Attention! `./voxelizer/CMakeLists.txt` is used for building in IDEs. 
+If you want to build using terminal/console, please use `./voxelizer/terminal/CMakeLists.txt`
+
 * MacOS-specific guide:
   * Install CMake by using brew: brew install cmake
   
