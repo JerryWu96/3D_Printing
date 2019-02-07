@@ -4,7 +4,9 @@ I am passionate about 3D Printing, so i decided to give it a try!
 
 This repo contains all the ongoing projects I participated in CS581 Computational Fabrication during 2019 Spring at BU.
 
-* Right now I finished a coding assignment. It is a voxelizer which you can use to convert a 3D model(.obj) into its voxelized form.
+By May I am going to finish a complete 3D Printing project, which includes the design of an object using CAS software, and print it out using 3D printers (for example, printers from FormLabs!)
+
+* Right now I finished a warm-up coding assignment. It is a voxelizer which you can use to convert a 3D model(.obj) into its voxelized form.
 See the sample provided, which I also include in the ./voxelizer/sample folder.
 
 # Usage
