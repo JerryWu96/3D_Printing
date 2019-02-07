@@ -2,7 +2,7 @@
 
 I am passionate about 3D Printing, so i decided to give it a try!
 
-This repo contains all the ongoing projects I participated in CS581 Computational Fabrication during 2019 Spring at BU.
+This repo contains all the <b>ongoing</b> projects I participated in CS581 Computational Fabrication during 2019 Spring at BU.
 
 By May I am going to finish a complete 3D Printing project, which includes the design of an object using CAS software, and print it out using 3D printers (for example, printers from FormLabs!)
 
