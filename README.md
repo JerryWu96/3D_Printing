@@ -26,7 +26,8 @@ If you take it seriously, please use CMake with command lines to get a better un
 
 ## Build with CMake
 
-Attention! `./voxelizer/CMakeLists.txt` is used for building in IDEs. 
+Attention! `./voxelizer/CMakeLists.txt` is used for building in IDEs (As I mentioned, I used Clion). 
+
 If you want to build using terminal/console, please use `./voxelizer/terminal/CMakeLists.txt`
 
 * MacOS-specific guide:
