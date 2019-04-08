@@ -129,3 +129,10 @@ voxels with 64x64x64 diameter:
 
 <img src="https://github.com/JerryWu96/3D_Printing/blob/master/Voxelizer/sample%20pics/BUNNY%2064x64x64.png"></img>
 
+## Credits
+
+Boston University Department of Computer Science, CS581, Professor Whiting
+
+This repo was created by:
+
+Xiankang (Jerry) Wu
