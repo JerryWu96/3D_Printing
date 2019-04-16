@@ -25,23 +25,29 @@ A linkage is an assembly of bodies connected to manage forces and movement. In t
 
 Drag Link:
 
-https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/1%20Drag-link%20mech.png
+<img src='https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/1%20Drag-link%20mech.png?raw=true'></img>
 
 Double Rocker:
 
-https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/2%20-%20Double-rocker.png
+<img src='https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/2%20-%20Double-rocker.png?raw=true'></img>
+
+
 
 Hoekens:
 
-https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/3%20-%20Hoekens.png
+<img src='https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/3%20-%20Hoekens.png?raw=true'></img>
 
 Peaucellier-Lipkin:
 
-https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/4%20-%20Peaucellier-Lipkin.png
+<img src='https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/4%20-%20Peaucellier-Lipkin.png?raw=true'></img>
+
+
 
 Klann:
 
-https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/5-%20Klann.png
+<img src='https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/5-%20Klann.png?raw=true'></img>
+
+
 
 ## Credits
 
