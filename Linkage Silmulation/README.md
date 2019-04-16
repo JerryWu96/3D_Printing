@@ -23,7 +23,25 @@ A linkage is an assembly of bodies connected to manage forces and movement. In t
 
 ## Results
 
+Drag Link:
 
+https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/1%20Drag-link%20mech.png
+
+Double Rocker:
+
+https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/2%20-%20Double-rocker.png
+
+Hoekens:
+
+https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/3%20-%20Hoekens.png
+
+Peaucellier-Lipkin:
+
+https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/4%20-%20Peaucellier-Lipkin.png
+
+Klann:
+
+https://github.com/JerryWu96/3D_Printing/blob/master/Linkage%20Silmulation/Simulation%20Results/5-%20Klann.png
 
 ## Credits
 
